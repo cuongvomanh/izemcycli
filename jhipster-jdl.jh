@@ -1,0 +1,106 @@
+
+/** quản lý word */
+entity Word {
+	/** khóa chính
+ */
+	id Long required,
+	/** trạng thái bản ghi, 1 - khả dụng, 0 - không khả dụng
+ */
+	state Integer required,
+	/** 0: Ngừng hoạt động, 1: Hoạt Động , 2 : Dự Thảo, 3: Đã Xóa */
+	status Integer,
+    /** Name */
+    name String required,
+}
+
+/** bảng loại dictionary */
+entity Dictionary {
+	/** khóa chính */
+	id Long required,
+	/** trạng thái bản ghi, 1 - khả dụng, 0 - không khả dụng */
+	state Integer required,
+    /** 0: Ngừng hoạt động, 1: Hoạt Động , 2 : Dự Thảo, 3: Đã Xóa */
+	status Integer,
+    /** Name */
+    name String required,
+}
+
+/** bảng loại dictionary word mapping */
+entity DictionaryWordMapping {
+	/** khóa chính */
+	id Long required,
+	/** trạng thái bản ghi, 1 - khả dụng, 0 - không khả dụng */
+	state Integer required,
+    /** 0: Ngừng hoạt động, 1: Hoạt Động , 2 : Dự Thảo, 3: Đã Xóa */
+	status Integer
+}
+
+/** bảng loại appUser word mapping */
+entity AppUserWordMapping {
+	/** khóa chính */
+	id Long required,
+	/** trạng thái bản ghi, 1 - khả dụng, 0 - không khả dụng */
+	state Integer required,
+    /** 0: Ngừng hoạt động, 1: Hoạt Động , 2 : Dự Thảo, 3: Đã Xóa */
+	status Integer
+}
+
+
+
+/** quản lý người dùng */
+entity AppUser {
+	/** khóa chính */
+	id Long required,
+	/** trạng thái bản ghi, 1 - khả dụng, 0 - không khả dụng */
+	state Integer,
+	/** tên đăng nhập */
+	userName String maxlength(200),
+	/** số điện thoại */
+	phone String maxlength(50),
+	/** email */
+	email String maxlength(100),
+	/** Địa chỉ IP */
+	ipAddress String maxlength(200),
+	/** loại người dùng : lấy trong bảng app_param với par_type = USER_USER_TYPE */
+	userType Integer,
+	/** trạng thái  */
+	status Integer,
+	/** Mô tả */
+	description String maxlength(400),
+	/** 1: đang sửa ; 0 : đang không sửa */
+	isEdit Integer,
+	/** 1:user mới. cần đổi mật khẩu , 0: user cũ */
+	isNewUser Integer
+}
+
+/** quản lý attachment */
+entity Attachment {
+	/** khóa chính
+ */
+	id Long required,
+	/** trạng thái bản ghi, 1 - khả dụng, 0 - không khả dụng
+ */
+	state Integer required,
+	/** 0: Ngừng hoạt động, 1: Hoạt Động , 2 : Dự Thảo, 3: Đã Xóa */
+	status Integer,
+    /** Name */
+    name String required,
+}
+
+// Relations
+relationship OneToMany {
+    Dictionary{dictionaryWordMapping} to DictionaryWordMapping{dictionaryId(dictionaryId)},
+    Word{dictionaryWordMapping} to DictionaryWordMapping{wordId(wordId)},
+    AppUser{appUserWordMapping} to AppUserWordMapping{appUserId(appUserId)},
+    Word{appUserWordMapping} to AppUserWordMapping{wordId(wordId)},
+    AppUser{attachment} to Attachment{appUserId(appUserId)},
+}
+
+
+
+// Options
+service * with serviceClass
+paginate * with pagination
+dto * with mapstruct
+filter *
+
