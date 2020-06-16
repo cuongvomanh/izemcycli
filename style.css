@@ -1,0 +1,14 @@
+.shiny {
+ background-color: yellow;
+}
+
+img {
+  width: 56px;
+  height: 48px;
+}
+
+h1 {
+  font-weight: 200;
+  font-style: 26px;
+  margin: 10px;
+}
