@@ -637,7 +637,7 @@
 
 
 findAndReplaceDOMText(document.body, {
-  find: 'steps',
+  find: 'TUCANTHAY',
   wrap: 'span',
   wrapClass: 'shiny'
   }
